@@ -1,0 +1,134 @@
+.rate-limit-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    
+    width: 100%;
+    margin: 0 auto;
+    
+    background-color: #1a202c; /* Dark background */
+}
+
+.rate-limit-display-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rate-limit-display-header h2 {
+    margin: 0;
+    font-weight: 600;
+    color: #ffffff; /* White text */
+}
+
+.last-update {
+    font-size: 14px;
+    color: #b3b9d7; /* Light gray */
+    margin-top: 5px;
+}
+
+.rate-limit-display-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+
+    width: 100%;
+}
+
+.rate-limit-display-rule {
+    border: 1px solid #4a5568; /* Dark gray border */
+    border-radius: 4px;
+    padding: 15px;
+    min-width: 300px;
+    background-color: #1a202c; /* Dark background */
+}
+
+.rate-limit-display-rule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rule-number {
+    margin: 0;
+    font-weight: 500;
+    color: #ffffff; /* White text */
+}
+
+.rule-info {
+    font-size: 14px;
+    color: #b3b9d7; /* Light gray */
+}
+
+.rate-limit-display-rule-body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.load-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.load-status-dot {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.available {
+    background-color: #64bd63; /* Green dot */
+}
+
+.unavailable {
+    background-color: #dc3545; /* Red dot */
+}
+
+.load-text {
+    font-size: 14px;
+    color: #b3b9d7; /* Light gray */
+}
+
+.progress-bar {
+    position: relative;
+    height: 20px;
+    background-color: #1a202c; /* Dark background */
+    border: 1px solid #2a303b; /* Dark gray border */
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.bar {
+    height: 100%;
+    background-color: #f0f0f0; /* Light gray bar */
+    transition: width 0.3s ease;
+}
+
+.hits-count {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff; /* White text */
+}
+
+.no-active-rules {
+    font-size: 18px;
+    color: #b3b9d7; /* Light gray */
+    text-align: center;
+}
