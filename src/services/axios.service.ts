@@ -27,8 +27,6 @@ class AxiosService {
         this.initializeAxios();
     }
     
-    
-    
     private initializeAxios(): void {
         const axiosInstance = axios.create({
             baseURL: 'https://www.pathofexile.com',

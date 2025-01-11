@@ -22,75 +22,31 @@ class RateLimitManager {
     // Life Cycle
     
     private constructor() {
-        this._rateLimits = new Map();
+        this._rateLimits = new Map().set(RateLimits.IP, []).set(RateLimits.CLIENT, []).set(RateLimits.ACCOUNT, []);
 
         this._rateLimits.set(RateLimits.IP, [
             new RateLimit({maximumHits: 5, evaluatedPeriod: 10, restrictedTime: 60}), 
             new RateLimit({maximumHits: 15, evaluatedPeriod: 60, restrictedTime: 600}),
             new RateLimit({maximumHits: 30, evaluatedPeriod: 300, restrictedTime: 1800})
         ]);
-        this._rateLimits.set(RateLimits.CLIENT, [
-            new RateLimit({maximumHits: 5, evaluatedPeriod: 10, restrictedTime: 60}), 
-            new RateLimit({maximumHits: 15, evaluatedPeriod: 60, restrictedTime: 600}),
-            new RateLimit({maximumHits: 30, evaluatedPeriod: 300, restrictedTime: 1800})
-        ]);
-        this._rateLimits.set(RateLimits.ACCOUNT, [
-        ]);
 
         setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.IP);
+            const date = new Date();
 
-            a[0].update(new Date(), (a[0].currentHits + 1) % a[0].maximumHits, 10, 0);
+            if (this.isTypeReachable(RateLimits.IP, date)) {
+                const data = this.getLimitsForType(RateLimits.IP);
 
-            this.updateRateLimits(RateLimits.IP, a);
-        }, 150_000 * Math.random());
+                const totalHits = Math.round(this.availableHits(RateLimits.IP, date) * Math.random());
 
-        setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.IP);
+                const hits0 = data[0].currentHits >= data[0].maximumHits * RateLimit.actualLimitPourcentage ? totalHits : data[0].currentHits + totalHits;
+                data[0].update(date, hits0, 10, 0);
 
-            a[0].update(new Date(), (a[0].currentHits + Math.round(Math.random() + 1)) % a[0].maximumHits, 10, 0);
+                const hits1 = data[1].currentHits >= data[1].maximumHits * RateLimit.actualLimitPourcentage ? totalHits : data[1].currentHits + totalHits;
+                data[1].update(date, hits1, 60, 0);
 
-            this.updateRateLimits(RateLimits.IP, a);
-        }, 15_000 * Math.random());
-
-        setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.IP);
-
-            a[1].update(new Date(), (a[1].currentHits + Math.round(Math.random() + 2)) % a[1].maximumHits, 30, 0);
-
-            this.updateRateLimits(RateLimits.IP, a);
-        }, 15_000 * Math.random());
-
-        setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.IP);
-
-            a[2].update(new Date(), (a[2].currentHits + 2) % a[2].maximumHits, 60, 0);
-
-            this.updateRateLimits(RateLimits.IP, a);
-        }, 60_000 * Math.random());
-
-        setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.CLIENT);
-
-            a[2].update(new Date(), (Math.round(a[2].currentHits + Math.random() * 3)) % a[2].maximumHits, 60, 0);
-
-            this.updateRateLimits(RateLimits.CLIENT, a);
-        }, 10_000 * Math.random());
-
-        setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.CLIENT);
-
-            a[0].update(new Date(), (Math.round(a[0].currentHits + Math.random() * 2)) % a[0].maximumHits, 60, 0);
-
-            this.updateRateLimits(RateLimits.CLIENT, a);
-        }, 150_000 * Math.random());
-
-        setInterval(() => {
-            const a = this.getLimitsForType(RateLimits.CLIENT);
-
-            a[0].update(new Date(), (Math.round(a[0].currentHits + Math.random() * 1)) % a[0].maximumHits, 60, 0);
-
-            this.updateRateLimits(RateLimits.CLIENT, a);
+                const hits2 = data[2].currentHits >= data[2].maximumHits * RateLimit.actualLimitPourcentage ? totalHits : data[2].currentHits + totalHits;
+                data[2].update(date, hits2, 300, 0);
+            }
         }, 5_000 * Math.random());
     }
     
